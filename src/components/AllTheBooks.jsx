@@ -12,7 +12,7 @@ class AllTheBooks extends Component {
                 <Row className ="mt-3 justify-content-center">
                     {items.map((book)=>{
                         return(
-                        <Card className="col-lg-3 col-md-4 col-6 mb-3" style={{ width: '18rem' }}>
+                        <Card className="col col-lg-3 col-md-4 col-6 mb-3">
                             <Card.Img variant="top" src={book.img} />
                             <Card.Body>
                                 <Card.Title>{book.title}</Card.Title>
