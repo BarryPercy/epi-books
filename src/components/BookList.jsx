@@ -1,49 +1,42 @@
-import React, { useState } from 'react';
-import SingleBook from "./SingleBook";
-import { Container, Row, InputGroup, Form} from 'react-bootstrap'
+import React, { Component} from 'react';
+import SingleBook from './SingleBook'
+import { Col, Form, Row } from 'react-bootstrap'
 
-// searchInput.addEventListener("keyup", ()=>{
-//     let search = searchInput.value;
-//     if(search.length<3){
-//         renderBooks(books);
-//     }else{
-//         newBooks = books.filter(contains =>contains.title.toLowerCase().includes(search.toLowerCase()))
-//         renderBooks(newBooks);
-//     }
+class BookList extends Component {
+  state = {
+    searchQuery: '',
+  }
 
-// });
-
-function BookList(props) {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [filteredBooks, setFilteredBooks] = useState(props.Books);
-    const handleSearch = (event) => {
-        setSearchTerm(event.target.value.toLowerCase());
-        setFilteredBooks(
-          props.Books.filter((book) => book.title.toLowerCase().includes(searchTerm))
-        );
-      };
+  render() {
     return (
-        <Container>
-            <Row>
-                <InputGroup className="mb-3">
-                    <Form.Control
-                        placeholder="Search"
-                        aria-label="Search"
-                        id="search-input"
-                        onChange={handleSearch}
-                        value = {searchTerm}
-                    />
-                </InputGroup>
-            </Row>
-            <Row>
-                {filteredBooks.map((book)=>{
-                    return(
-                        <SingleBook key={book.asin} SingleBook={book}></SingleBook>
-                    )
-                })}
-            </Row>
-        </Container>
+      <>
+        <Row>
+          <Col>
+            <Form.Group>
+              <Form.Label>Search a book</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Search here"
+                value={this.state.searchQuery}
+                onChange={(e) => this.setState({ searchQuery: e.target.value })}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
+          {this.props.books
+            .filter((b) =>
+              b.title.toLowerCase().includes(this.state.searchQuery.toLowerCase())
+            )
+            .map((b) => (
+              <Col xs={12} md={4} lg={3} key={b.asin}>
+                <SingleBook book={b} />
+              </Col>
+            ))}
+        </Row>
+      </>
     )
   }
-  
-  export default BookList;
+}
+
+export default BookList
