@@ -5,7 +5,7 @@ function Welcome() {
       <Jumbotron>
         <h1>EpiBooks</h1>
         <p>
-          Our Books are made from recycled pizza
+          We like books
         </p>
       </Jumbotron>
     );

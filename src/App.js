@@ -12,8 +12,8 @@ import fantasy from './data/fantasy.json'
 function App() {
   return (
     <div>
-      <MyNav Brand="Epibooks"/>
       <Container fluid>
+        <MyNav Brand="Epibooks"/>
         <Welcome/>
         <BookList books={fantasy} />
         <MyFooter />

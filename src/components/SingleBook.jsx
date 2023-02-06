@@ -5,14 +5,20 @@ import CommentArea from './CommentArea'
 class SingleBook extends Component {
   state = {
     selected: false,
+    bookAsin: this.props.book.asin,
   }
-
+  onSelected(){
+    this.props.selectedAsin(this.state.bookAsin);
+  }
   render() {
     return (
         <div>
             <Card
-                onClick={() => this.setState({ selected: !this.state.selected })}
-                style={{ outline: this.state.selected ? '3px solid red' : 'none',width:"80%"}}
+                onClick={() => {
+                    this.onSelected()
+                  }
+                }
+                style={{ outline: this.props.selected ? '3px solid red' : 'none'}}
             >
                 <Card.Img variant="top" src={this.props.book.img} />
                 <Card.Body>
@@ -22,7 +28,7 @@ class SingleBook extends Component {
                 </Card.Body>
             </Card>
             <>
-                {this.state.selected && <CommentArea id={this.props.book.asin}/>}
+                {/* {this.state.selected && <CommentArea id={this.props.book.asin}/>} */}
             </>
         </div>
     )

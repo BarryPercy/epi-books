@@ -17,7 +17,7 @@ class SingleComment extends Component{
                     },
                 });
                 if(res.ok){
-                    console.log(res);
+                    this.props.updateCommentArea();
                 }
             }catch(error){
                 console.log(error);
@@ -29,8 +29,8 @@ class SingleComment extends Component{
             rate: this.state.rating,
             elementId: this.props.id,
         };
-        console.log(data);
         this.postComment(data);
+        this.setState({ comment: '' });
     }
 
     handleCommentChange = (e) => {
@@ -50,6 +50,7 @@ class SingleComment extends Component{
                     <Form.Control
                         placeholder="e.g. I hate this book"
                         onChange={this.handleCommentChange}
+                        value = {this.state.comment}
                     />
                 </InputGroup>
                 <InputGroup className="mb-3">

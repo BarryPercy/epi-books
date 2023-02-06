@@ -16,7 +16,6 @@ class SingleComment extends Component{
                 },
             });
             if(res.ok){
-
                 this.props.onCommentDelete();
             }
         }catch(error){

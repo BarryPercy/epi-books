@@ -5,14 +5,14 @@ class CommentsList extends Component{
     state={
 
     }
-    handleCommentDelete = () => {
-        this.setState({});
+    handleCommentChange = () => {
+        this.props.updateCommentArea();
       }
     render(){
         return(
             this.props.comments.map((comment) => {
                 return (
-                        <SingleComment key={comment._id} comment={comment} id={this.props.id} onCommentDelete={this.handleCommentDelete}/>
+                        <SingleComment key={comment._id} comment={comment} id={this.props.id} onCommentDelete={this.handleCommentChange}/>
                 )
             })
         )

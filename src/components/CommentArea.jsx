@@ -23,7 +23,6 @@ class CommentArea extends Component{
                     comments:data,
                     isLoading:false,
                 })
-                console.log(data)
             }
             else{
                 this.setState({
@@ -36,9 +35,17 @@ class CommentArea extends Component{
             console.log(error);
         }
     }
+    updateComments=()=>{
+        this.fetchComments();
+    }
     componentDidMount() {
         this.fetchComments();
-      }
+    }
+    componentDidUpdate=(prevProps, prevState)=>{
+        if(prevProps.id !==this.props.id){
+            this.fetchComments();
+        }
+    }
     render(){
         return(
             <>
@@ -49,8 +56,8 @@ class CommentArea extends Component{
                 {this.state.isError && (
                     <Alert variant="danger">Aww snap, we got an error!😨</Alert>
                 )}
-                <CommentsList comments={this.state.comments} id={this.props.id}/>
-                <AddComment id={this.props.id}/>
+                <CommentsList comments={this.state.comments} id={this.props.id} updateCommentArea={this.updateComments}/>
+                <AddComment id={this.props.id} updateCommentArea={this.updateComments}/>
             </>
 
         )

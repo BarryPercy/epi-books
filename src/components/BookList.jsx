@@ -1,10 +1,19 @@
 import React, { Component} from 'react';
 import SingleBook from './SingleBook'
-import { Col, Form, Row } from 'react-bootstrap'
+import { Container,Col, Form, Row } from 'react-bootstrap'
+import CommentArea from './CommentArea'
 
 class BookList extends Component {
   state = {
     searchQuery: '',
+    bookSelected: false,
+    selectedAsin: '',
+  }
+  selectedBook = (asin)=>{
+    this.setState({
+      bookSelected:true,
+      selectedAsin: asin,
+    })
   }
 
   render() {
@@ -24,15 +33,26 @@ class BookList extends Component {
           </Col>
         </Row>
         <Row>
-          {this.props.books
-            .filter((b) =>
-              b.title.toLowerCase().includes(this.state.searchQuery.toLowerCase())
-            )
-            .map((b) => (
-              <Col xs={12} md={4} lg={3} key={b.asin}>
-                <SingleBook book={b} />
-              </Col>
-            ))}
+          <Col md={6}>
+            <Container>
+              <Row>
+                {this.props.books
+                  .filter((b) =>
+                    b.title.toLowerCase().includes(this.state.searchQuery.toLowerCase())
+                  )
+                  .map((book) => (
+                        <Col md={6} key={book.asin}>
+                          <SingleBook book={book} selectedAsin={this.selectedBook} selected = {book.asin===this.state.selectedAsin}/>
+                        </Col>
+                ))}
+              </Row>
+                
+              
+            </Container>
+          </Col>
+          <Col md={6}>
+            {this.state.bookSelected && <CommentArea id={this.state.selectedAsin}/>} 
+          </Col>
         </Row>
       </>
     )
