@@ -35,7 +35,7 @@ class CommentArea extends Component{
             console.log(error);
         }
     }
-    updateComments=()=>{
+    updateComments=()=>{ 
         this.fetchComments();
     }
     componentDidMount() {
