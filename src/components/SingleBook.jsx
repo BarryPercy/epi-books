@@ -4,10 +4,8 @@ import { Card } from 'react-bootstrap'
 import { useState } from 'react'
 
 const SingleBook = (props)=> {
-  const [selected,setSelected] = useState(false)
-  const [bookAsin,setbookAsin] = useState(props.book.asin)
   const onSelected = ()=>{
-    props.selectedAsin(bookAsin);
+    props.selectedAsin(props.book.asin);
   }
     return (
         <div>

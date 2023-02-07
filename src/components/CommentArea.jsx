@@ -32,15 +32,12 @@ const CommentArea = (props)=>{
     }
     const updateComments=()=>{ 
         fetchComments();
-        console.log("comment deleted or created!")
     }
     useEffect(()=>{
         fetchComments();
-        console.log("mounting!")
     },[])
     useEffect(() => {
         fetchComments();
-        console.log("updating!")
 	},[props.id])
     return(
         <>
