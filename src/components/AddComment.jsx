@@ -1,12 +1,11 @@
 import {Component} from 'react'
 import {InputGroup,Form, Button} from 'react-bootstrap';
+import { useState} from 'react'
 
-class SingleComment extends Component{
-    state={
-        comment:'',
-        rating:1,
-    }
-    postComment = async (data)=>{
+const AddComment = (props)=>{
+    const [comment,setComment] = useState('')
+    const [rating, setRating] = useState(1)
+    const postComment = async (data)=>{
             try{
                 const res = await fetch(`https://striveschool-api.herokuapp.com/api/comments/`, {
                     method: 'POST',
@@ -17,59 +16,58 @@ class SingleComment extends Component{
                     },
                 });
                 if(res.ok){
-                    this.props.updateCommentArea();
+                    props.updateCommentArea();
                 }
             }catch(error){
                 console.log(error);
             }
         }
-    handleClick = async () => {
+    const handleClick = async () => {
         const data = {
-            comment: this.state.comment,
-            rate: this.state.rating,
-            elementId: this.props.id,
+            comment: comment,
+            rate: rating,
+            elementId: props.id,
         };
-        this.postComment(data);
-        this.setState({ comment: '' });
+        postComment(data);
+        
+        setComment('');
     }
 
-    handleCommentChange = (e) => {
-        this.setState({ comment: e.target.value });
+    const handleCommentChange = (e) => {
+        setComment(e.target.value)
     };
     
-    handleRatingChange = (e) => {
-        this.setState({ rating: e.target.value });
+    const handleRatingChange = (e) => {
+        setRating(e.target.value)
     };
 
-    render(){
-        return(
-            <>  
-                <h2>Add a Comment:</h2>
-                <InputGroup className="mb-3">
-                    <InputGroup.Text>Comment</InputGroup.Text>
-                    <Form.Control
-                        placeholder="e.g. I hate this book"
-                        onChange={this.handleCommentChange}
-                        value = {this.state.comment}
-                    />
-                </InputGroup>
-                <InputGroup className="mb-3">
-                    <InputGroup.Text>Rating</InputGroup.Text>
-                    <Form.Control as="select" onChange={this.handleRatingChange}>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </Form.Control>
-                </InputGroup>
-                <Button variant="primary" type="submit" onClick={this.handleClick}>
-                    Submit
-                </Button>
+    return(
+        <>  
+            <h2>Add a Comment:</h2>
+            <InputGroup className="mb-3">
+                <InputGroup.Text>Comment</InputGroup.Text>
+                <Form.Control
+                    placeholder="e.g. I hate this book"
+                    onChange={handleCommentChange}
+                    value = {comment}
+                />
+            </InputGroup>
+            <InputGroup className="mb-3">
+                <InputGroup.Text>Rating</InputGroup.Text>
+                <Form.Control as="select" onChange={handleRatingChange}>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </Form.Control>
+            </InputGroup>
+            <Button variant="primary" type="submit" onClick={handleClick}>
+                Submit
+            </Button>
 
-            </>
-        )
-    }
+        </>
+    )   
 }
 
-export default SingleComment;
+export default AddComment;

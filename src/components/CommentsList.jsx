@@ -1,22 +1,20 @@
 import { Component } from 'react'
 import SingleComment from './SingleComment'
 
-class CommentsList extends Component{
-    state={
 
-    }
-    handleCommentChange = () => {
-        this.props.updateCommentArea();
+const CommentsList = (props)=>{
+    const handleCommentChange = () => {
+        props.updateCommentArea();
       }
-    render(){
-        return(
-            this.props.comments.map((comment) => {
-                return (
-                        <SingleComment key={comment._id} comment={comment} id={this.props.id} onCommentDelete={this.handleCommentChange}/>
-                )
-            })
-        )
-    }
+    
+    return(
+        props.comments.map((comment) => {
+            return (
+                    <SingleComment key={comment._id} comment={comment} id={props.id} onCommentDelete={handleCommentChange}/>
+            )
+        })
+    )
+    
 }
 
 export default CommentsList;

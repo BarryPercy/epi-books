@@ -1,14 +1,10 @@
-import {Component} from 'react'
+
 import { Button } from 'react-bootstrap';
 
-class SingleComment extends Component{
-    state={
-        author: this.props.comment.author,
-        comment: this.props.comment.comment
-    }
-    deleteComment = async (data)=>{
+const SingleComment=(props)=>{
+    const deleteComment = async ()=>{
         try{
-            const res = await fetch(`https://striveschool-api.herokuapp.com/api/comments/${this.props.comment._id}`, {
+            const res = await fetch(`https://striveschool-api.herokuapp.com/api/comments/${props.comment._id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -16,23 +12,23 @@ class SingleComment extends Component{
                 },
             });
             if(res.ok){
-                this.props.onCommentDelete();
+                props.onCommentDelete();
             }
         }catch(error){
             console.log(error);
         }
     }
-    render(){
-        return(
-            <>
-                <h4>{this.state.author}</h4>
-                <p>{this.state.comment} {this.props.comment.rate}/5 <Button variant="danger" type="submit" onClick={() => this.deleteComment()}>
-                    Delete
-                </Button></p>
-                
-            </>
-        )
-    }
+    
+    return(
+        <>
+            <h4>{props.comment.author}</h4>
+            <p>{props.comment.comment} {props.comment.rate}/5 <Button variant="danger" type="submit" onClick={() => deleteComment()}>
+                Delete
+            </Button></p>
+            
+        </>
+    )
+    
 }
 
 export default SingleComment;

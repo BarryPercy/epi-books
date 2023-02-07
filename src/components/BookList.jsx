@@ -2,21 +2,17 @@ import React, { Component} from 'react';
 import SingleBook from './SingleBook'
 import { Container,Col, Form, Row } from 'react-bootstrap'
 import CommentArea from './CommentArea'
+import { useState } from 'react'
 
-class BookList extends Component {
-  state = {
-    searchQuery: '',
-    bookSelected: false,
-    selectedAsin: '',
-  }
-  selectedBook = (asin)=>{
-    this.setState({
-      bookSelected:true,
-      selectedAsin: asin,
-    })
+const BookList = (props) =>{
+  const [searchQuery, setSearchQuery] = useState('')
+  const [bookSelected,setBookSelected] = useState(false)
+  const [selectedAsin, setSelectedAsin] = useState('')
+  let selectedBook = (asin)=>{
+    setBookSelected(true)
+    setSelectedAsin(asin)
   }
 
-  render() {
     return (
       <>
         <Row>
@@ -26,8 +22,8 @@ class BookList extends Component {
               <Form.Control
                 type="text"
                 placeholder="Search here"
-                value={this.state.searchQuery}
-                onChange={(e) => this.setState({ searchQuery: e.target.value })}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </Form.Group>
           </Col>
@@ -36,13 +32,13 @@ class BookList extends Component {
           <Col md={6}>
             <Container>
               <Row>
-                {this.props.books
+                {props.books
                   .filter((b) =>
-                    b.title.toLowerCase().includes(this.state.searchQuery.toLowerCase())
+                    b.title.toLowerCase().includes(searchQuery.toLowerCase())
                   )
                   .map((book) => (
                         <Col md={6} key={book.asin}>
-                          <SingleBook book={book} selectedAsin={this.selectedBook} selected = {book.asin===this.state.selectedAsin}/>
+                          <SingleBook book={book} selectedAsin={selectedBook} selected = {book.asin===selectedAsin}/>
                         </Col>
                 ))}
               </Row>
@@ -51,12 +47,11 @@ class BookList extends Component {
             </Container>
           </Col>
           <Col md={6}>
-            {this.state.bookSelected && <CommentArea id={this.state.selectedAsin}/>} 
+            {bookSelected && <CommentArea id={selectedAsin}/>} 
           </Col>
         </Row>
       </>
     )
   }
-}
 
 export default BookList

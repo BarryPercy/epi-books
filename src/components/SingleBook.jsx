@@ -1,29 +1,27 @@
 import React, { Component} from 'react';
 import { Card } from 'react-bootstrap'
-import CommentArea from './CommentArea'
+// import CommentArea from './CommentArea'
+import { useState } from 'react'
 
-class SingleBook extends Component {
-  state = {
-    selected: false,
-    bookAsin: this.props.book.asin,
+const SingleBook = (props)=> {
+  const [selected,setSelected] = useState(false)
+  const [bookAsin,setbookAsin] = useState(props.book.asin)
+  const onSelected = ()=>{
+    props.selectedAsin(bookAsin);
   }
-  onSelected(){
-    this.props.selectedAsin(this.state.bookAsin);
-  }
-  render() {
     return (
         <div>
             <Card
                 onClick={() => {
-                    this.onSelected()
+                    onSelected()
                   }
                 }
-                style={{ outline: this.props.selected ? '3px solid red' : 'none'}}
+                style={{ outline: props.selected ? '3px solid red' : 'none'}}
             >
-                <Card.Img variant="top" src={this.props.book.img} />
+                <Card.Img variant="top" src={props.book.img} />
                 <Card.Body>
                 <Card.Title style={{ color: 'black' }}>
-                    {this.props.book.title}
+                    {props.book.title}
                 </Card.Title>
                 </Card.Body>
             </Card>
@@ -33,6 +31,5 @@ class SingleBook extends Component {
         </div>
     )
   }
-}
 
 export default SingleBook
